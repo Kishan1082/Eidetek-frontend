@@ -1,0 +1,16 @@
+import React from "react";
+
+function FormInput({ label, type, placeholder }) {
+  return (
+    <div className="mb-2 w-full">
+      <label className="mb-1 block text-base text-stone-500">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        className="px-6 py-4 w-full text-base rounded-xl border border-stone-500 border-opacity-30 text-stone-500 text-opacity-60"
+      />
+    </div>
+  );
+}
+
+export default FormInput;
