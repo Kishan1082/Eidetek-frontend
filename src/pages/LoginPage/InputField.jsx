@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-function InputField({ label, type = "text", showHideOption = false }) {
+function InputField({ label, type = "text", showHideOption = false ,value, onChange}) {
   const [showPassword, setShowPassword] = useState(false);
   const actualType = type === "password" && showPassword ? "text" : type;
 
@@ -28,6 +28,8 @@ function InputField({ label, type = "text", showHideOption = false }) {
       <input
         type={actualType}
         className="flex mt-1 w-full rounded-xl border border-solid border-stone-500 border-opacity-30 min-h-14 max-md:max-w-full px-4"
+        value={value} 
+        onChange={onChange} 
       />
     </div>
   );

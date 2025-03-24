@@ -8,6 +8,30 @@ import CheckboxField from "./CheckBoxField";
 import ActionButton from "./ActionButton";
 
 function LoginPage() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(username, password);
+      const response = await fetch("http://10.0.0.165:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        alert("Login successful!");
+      } else {
+        setError(data.error);
+      }
+    } catch (error) {
+      setError("Failed to login");
+    }
+  };
+
   return (
     <main className="flex overflow-hidden flex-col items-center px-14 py-16 bg-white max-md:px-5">
       <Logo />
@@ -22,7 +46,12 @@ function LoginPage() {
       <Divider text="OR" className="mt-5" />
 
       <section className="flex flex-col mt-5 max-w-full min-h-[350px] w-[500px]">
-        <InputField label="Email address or user name" type="text" />
+        <InputField
+          label="Email address or user name"
+          type="text"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
 
         <div className="mt-6 w-full h-[87px]">
           <div className="flex flex-col items-end w-full">
@@ -30,26 +59,22 @@ function LoginPage() {
               label="Password"
               type="password"
               showHideOption={true}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
-            <button className="mt-2 text-base text-right underline text-neutral-900">
-              Forget your password
+            <button
+              className="mt-2 text-base text-right underline text-neutral-900"
+              onClick={handleSubmit}
+            >
+              Login
             </button>
+            {error && <p className="text-red-500">{error}</p>}
           </div>
         </div>
 
         <CheckboxField label="Remember me" className="mt-6" />
 
         <ActionButton text="Log in" primary={true} className="mt-6" />
-      </section>
-
-      <Divider className="mt-5" />
-
-      <section className="flex flex-col justify-center items-center mt-6 max-w-full text-center w-[500px]">
-        <h2 className="text-2xl font-medium text-zinc-800">
-          Don't have an account?
-        </h2>
-
-        <ActionButton text="Sign up" primary={false} className="mt-4" />
       </section>
     </main>
   );

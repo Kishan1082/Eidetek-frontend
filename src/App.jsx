@@ -10,8 +10,8 @@ import "./App.css";
 function App() {
   return (
     <div>
-      <LandingPage />
-      {/* <LoginPage /> */}
+      {/* <LandingPage /> */}
+      <LoginPage />
       {/* <SignUpForm /> */}
       {/* <ChatbotUI /> */}
       {/* <UploadInput /> */}
