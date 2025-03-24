@@ -11,8 +11,8 @@ function App() {
   return (
     <div>
       {/* <LandingPage /> */}
-      <LoginPage />
-      {/* <SignUpForm /> */}
+      {/* <LoginPage /> */}
+      <SignUpForm />
       {/* <ChatbotUI /> */}
       {/* <UploadInput /> */}
     </div>

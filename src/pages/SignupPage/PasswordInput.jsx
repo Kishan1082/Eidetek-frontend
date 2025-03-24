@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-function PasswordInput() {
+function PasswordInput({value, onChange}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -44,6 +44,8 @@ function PasswordInput() {
         type={showPassword ? "text" : "password"}
         placeholder="Enter your password"
         className="px-6 py-4 mb-1 w-full text-base rounded-xl border border-stone-500 border-opacity-30 text-stone-500 text-opacity-60"
+        value={value}
+        onChange={onChange}
       />
       <p className="text-sm text-stone-500">
         Use 8 or more characters with a mix of letters, numbers & symbols
