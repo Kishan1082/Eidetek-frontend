@@ -18,6 +18,7 @@ function LoginPage() {
       console.log(username, password);
       const response = await fetch("http://10.0.0.165:5000/auth/login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });

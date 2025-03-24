@@ -12,9 +12,9 @@ function App() {
     <div>
       {/* <LandingPage /> */}
       {/* <LoginPage /> */}
-      <SignUpForm />
+      {/* <SignUpForm /> */}
       {/* <ChatbotUI /> */}
-      {/* <UploadInput /> */}
+      <UploadInput />
     </div>
   );
 }
