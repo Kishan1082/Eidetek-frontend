@@ -2,6 +2,7 @@
 import React from "react";
 import ChatbotSuggestion from "./ChatbotSuggestion";
 import ChatbotInput from "./ChatbotInput";
+import Eidetik from "../../assets/Logo.svg"
 
 function ChatbotUI() {
   const suggestions = [
@@ -15,7 +16,7 @@ function ChatbotUI() {
       <div className="flex flex-col ml-9 w-full max-w-[910px] max-md:max-w-full">
         <header className="flex flex-col self-center max-w-full text-xl text-center text-stone-950 w-[425px]">
           <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/cf79a77996a4bb08905770661a62be7ca7abe732?placeholderIfAbsent=true&apiKey=08467026694342f59e19e940d07320ef"
+            src={Eidetik}
             alt="Eidetik Logo"
             className="object-contain self-center w-9 rounded-md aspect-[0.97]"
           />

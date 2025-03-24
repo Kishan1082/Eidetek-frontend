@@ -1,36 +1,35 @@
 import React from "react";
+import Eidetik from "../../assets/Logo.svg";
 
 function Header() {
   return (
-    <header className="flex relative items-center px-9 py-3.5 w-full min-h-[57px] max-md:px-5 max-md:max-w-full">
-      <div className="flex absolute right-0 bottom-0 z-0 flex-col self-start h-[57px] w-[1280px] max-md:max-w-full">
-        <div className="flex w-full bg-zinc-100 min-h-[57px] max-md:max-w-full" />
-      </div>
+    <header className="flex items-center justify-between px-6 sm:px-10 py-4 w-full bg-gray-100 border-b border-gray-300">
       <Logo />
-      <LoginButton />
+
     </header>
   );
 }
 
 function Logo() {
   return (
-    <div className="flex z-0 gap-4 self-stretch my-auto text-sm text-black whitespace-nowrap rounded-md w-[141px]">
+    <div className="flex items-center gap-3 text-lg text-black">
       <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/7785bdedbec869b484c69999990b417e212db032?placeholderIfAbsent=true&apiKey=08467026694342f59e19e940d07320ef"
+        src={Eidetik}
         alt="Eidetik.io logo"
-        className="object-contain shrink-0 rounded-md aspect-square w-[30px]"
+        className="w-[30px] h-[30px] object-contain rounded-md"
       />
-      <span className="my-auto">Eidetik.io</span>
+      <span className="font-medium">Eidetik.io</span>
+      
+      <LoginButton />
     </div>
   );
 }
 
 function LoginButton() {
   return (
-    <button className="z-0 self-stretch my-auto w-16 text-sm text-center text-black">
-      Log in
-    </button>
+    <button className="text-sm text-black hover:underline ml-auto">Log in</button>
   );
 }
 
 export default Header;
+

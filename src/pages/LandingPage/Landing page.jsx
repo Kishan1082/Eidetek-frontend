@@ -4,9 +4,11 @@ import HeroSection from "./HeroSection";
 
 function LandingPage() {
   return (
-    <main className="flex overflow-hidden flex-col pt-7 pb-80 bg-white border border-black border-solid max-md:pb-24">
+    <main className="flex flex-col min-h-screen w-screen bg-white">
       <Header />
-      <HeroSection />
+      <div className="flex flex-1 items-center justify-center w-full px-4 sm:px-8">
+        <HeroSection />
+      </div>
     </main>
   );
 }
