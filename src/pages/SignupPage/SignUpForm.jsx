@@ -4,13 +4,22 @@ import FormInput from "./FormInput";
 import PasswordInput from "./PasswordInput";
 import SocialButton from "./SocialButton";
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+function LogInLink() {
+  return (
+    <Link to="/login">Log in</Link>
+  );
+}
 
 function SignUpForm() {
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [error, setError] = React.useState(null);
-  
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
       event.preventDefault();
       try {
@@ -20,8 +29,9 @@ function SignUpForm() {
           body: JSON.stringify({ username, password }),
         });
         const data = await response.json();
-        if (data.success) {
+        if (response.status === 200) {
           console.log("Signup successful!");
+          navigate("/login");
         } else {
           setError(data.error);
         }
@@ -39,9 +49,7 @@ function SignUpForm() {
             </h1>
             <p className="mb-11 text-base text-neutral-900">
             Already have an ccount?{" "}
-            <a href="#" className="underline text-neutral-900">
-                Log in
-            </a>
+            <LogInLink />
             </p>
         </header>
 
@@ -78,8 +86,6 @@ function SignUpForm() {
             </button>
             {error && <p className="text-red-500">{error}</p>}
         </form>
-
-        <div className="mb-3 text-2xl text-stone-500">Or continue with</div>
 
         </section>
     </main>

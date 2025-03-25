@@ -1,6 +1,5 @@
 import React from "react";
 import Bckgrnd from "../../assets/Background.svg";
-import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
   return (
@@ -20,25 +19,8 @@ function HeroSection() {
         <p className="mt-4 text-xl text-gray-700">
           Keep important info at your fingertips, always.
         </p>
-
-        {/* Button */}
-        <GetStarted />
       </div>
     </section>
-  );
-}
-
-function GetStarted() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/signup");
-  };
-  
-  return (
-    <button className="px-8 py-4 mt-6 text-base font-medium rounded bg-black text-white transition-all duration-200 ease-in-out hover:bg-gray-900" onClick={handleClick}>
-      Get Started
-    </button>
   );
 }
 

@@ -21,24 +21,54 @@ function Logo() {
       />
       <span className="font-medium">Eidetik.io</span>
       
-      <LoginButton />
+      <div className="ml-auto flex gap-4">
+      <Chatbot />
+      <Upload />
+      <Logout />
+      </div>
     </div>
   );
 }
 
-function LoginButton() {
+function Chatbot() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/login");
+    navigate("/chatbot");
   };
 
   return (
     <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
-      Log in
+      Chat with Eidetek
     </button>
   );
 }
 
+function Upload() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/upload");
+  };
+
+  return (
+    <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
+      Start a new upload
+    </button>
+  );
+}
+function Logout() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/");
+  };
+
+  return (
+    <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
+      Logout
+    </button>
+  );
+}
 export default Header;
 

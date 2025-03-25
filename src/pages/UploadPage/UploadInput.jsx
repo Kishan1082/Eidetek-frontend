@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import FormInput from "./FormInput";
+import UploadIcon from "../../assets/Upload icon.svg"
 
 function UploadArea({ onUpload, selectedFiles }) {
   return (
@@ -31,6 +32,11 @@ function UploadArea({ onUpload, selectedFiles }) {
             strokeOpacity="0.3"
             strokeDasharray="5 5"
           ></rect>
+          <img
+            className="absolute w-3 h-[9px] top-1.5 left-[35px]"
+            alt="Vector"
+            src={UploadIcon}
+          />
           <text
             fill="#0F0F0F"
             xmlSpace="preserve"
@@ -61,14 +67,14 @@ function UploadArea({ onUpload, selectedFiles }) {
           <text
             fill="#676767"
             xmlSpace="preserve"
-            style={{ whiteSpace: "pre" }}
             fontFamily="Mulish"
             fontSize="12"
             letterSpacing="0em"
+            textAnchor="middle"
+            x="222.5"
+            y="277" 
           >
-            <tspan x="36.0957" y="277.53">
-              Supported formats: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
-            </tspan>
+          <tspan>Supported formats: JPEG, PNG, PDF, Word, PPT</tspan>
           </text>
         </svg>
         {selectedFiles.length > 0 && (
@@ -87,10 +93,12 @@ function UploadButton({ onClick }) {
   return (
     <button
       onClick={onClick}
-      className="text-sm font-bold text-white uppercase rounded-md cursor-pointer bg-stone-950 h-[45px] w-[445px] max-md:w-full max-md:max-w-[445px]"
+      className="all-[unset] box-border flex w-[445px] h-[45px] items-center justify-center gap-2.5 px-3.5 py-[9px] relative bg-[#0e0e0e] rounded-md"
       aria-label="Upload files"
     >
+    <div className="relative w-fit [font-family:'Mulish-Bold',Helvetica] font-bold text-white text-sm tracking-[0] leading-[18px] whitespace-nowrap">
       UPLOAD FILES
+    </div>
     </button>
   );
 }
@@ -124,14 +132,16 @@ function UploadInput() {
   
     const formData = new FormData();
     formData.append("document_type", documentType);
-    formData.append("question", question);
+    formData.append("questions", question);
     formData.append("relationship", relation);
     formData.append("file", selectedFiles[0]); // Append the file correctly
-  
+    
+    
     try {
-      const response = await fetch("http://localhost:5000/ocr/upload", {
+      const response = await fetch("http://10.0.0.165:5000/ocr/upload", {
         method: "POST",
         credentials: "include",
+        headers: { "Authorization": "Bearer " + localStorage.getItem("token")},
         body: formData, 
       });
     
@@ -154,27 +164,31 @@ function UploadInput() {
       <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
       <div className="flex flex-col gap-3 items-center w-full">
         <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles}/>
+        <br />
         <FormInput
-          label="Document Type"
+          label="Document Type: "
           type="text"
           placeholder="e.g. ID, passport, etc."
           value={documentType}
           onChange={(e) => setDocumentType(e.target.value)}
         />
+        <br />
         <FormInput
-          label="Question"
+          label="Questions: "
           type="text"
           placeholder="Enter your question"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
         />
+        <br />
         <FormInput
-          label="Relation"
+          label="Relation: "
           type="text"
           placeholder="Enter relation"
           value={relation}
           onChange={(e) => setRelation(e.target.value)}
         />
+        <br />
         <UploadButton onClick={handleSubmit} />
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>

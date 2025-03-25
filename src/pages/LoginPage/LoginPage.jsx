@@ -4,30 +4,48 @@ import Logo from "./Logo";
 import SocialLoginButton from "./SocialLoginButton";
 import Divider from "./Divider";
 import InputField from "./InputField";
-import CheckboxField from "./CheckBoxField";
-import ActionButton from "./ActionButton";
+import { useNavigate } from "react-router-dom";
 
+function SignupButton() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/signup");
+  };
+
+  return (
+    <button className="all-[unset] box-border relative w-[500px] h-[50px] rounded-[32px] overflow-hidden border border-solid border-[#111111]" onClick={handleClick}>
+    <div className="inline-flex items-center justify-center gap-2 relative top-3 left-52">
+    <div className="relative w-fit mt-[-1.00px] [font-family:'Roboto_Mono-Regular',Helvetica] font-normal text-[#111111] text-xl text-center tracking-[0] leading-[normal]">
+    Sign up
+    </div>
+    </div>
+    </button>
+    
+  );
+}
 function LoginPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       console.log(username, password);
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("http://10.0.0.165:5000/auth/login", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
       const data = await response.json();
-      if (data.success) {
+      console.log(data);
+      if (response.status === 200) {
+        localStorage.setItem("token", data.token);
         alert("Login successful!");
-      } else {
-        setError(data.error);
-      }
+        navigate("/landing-page-2");
+      } 
     } catch (error) {
       setError("Failed to login");
     }
@@ -38,13 +56,6 @@ function LoginPage() {
       <Logo />
 
       <h1 className="text-3xl font-medium text-center text-zinc-800">Log in</h1>
-
-      <SocialLoginButton
-        icon="https://cdn.builder.io/api/v1/image/assets/TEMP/0c6964178a5f932163df19388e0fbed663a80a88?placeholderIfAbsent=true&apiKey=08467026694342f59e19e940d07320ef"
-        text="Continue with Google"
-      />
-
-      <Divider text="OR" className="mt-5" />
 
       <section className="flex flex-col mt-5 max-w-full min-h-[350px] w-[500px]">
         <InputField
@@ -73,9 +84,10 @@ function LoginPage() {
           </div>
         </div>
 
-        <CheckboxField label="Remember me" className="mt-6" />
-
-        <ActionButton text="Log in" primary={true} className="mt-6" />
+        <div className="relative w-fit mt-[-1.00px] [font-family:'Roboto_Mono-Medium',Helvetica] font-medium text-[#333333] text-[22px] text-center tracking-[0] leading-[normal]">
+        Don’t have an account?
+        </div>
+        <SignupButton />
       </section>
     </main>
   );
