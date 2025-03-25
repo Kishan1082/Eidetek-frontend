@@ -107,6 +107,7 @@ function UploadInput() {
     input.type = "file";
     input.multiple = false;
     input.click();
+
     input.onchange = (e) => {
       const files = Array.from(e.target.files);
       console.log("Selected files:", files);
@@ -115,30 +116,39 @@ function UploadInput() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(selectedFiles);
+    if (selectedFiles.length === 0 || !selectedFiles[0]) {
+      setError("No file selected");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("document_type", documentType);
+    formData.append("question", question);
+    formData.append("relationship", relation);
+    formData.append("file", selectedFiles[0]); // Append the file correctly
+  
     try {
-      const response = await fetch("http://10.0.0.165:5000/ocr/upload", {
+      const response = await fetch("http://localhost:5000/ocr/upload", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          document_type: documentType,
-          question,
-          relationship:relation,
-          file: selectedFiles[0], // Send file names
-        }),
+        body: formData, 
       });
-
-      const data = await response.json();
-      if (data.success) {
-        console.log(data);
+    
+      const data = await response.json(); // Extract JSON from response
+      
+      console.log(data);
+      if (response.ok) {
+        console.log("Success:", data.message); // Display success message
       } else {
-        setError(data.error);
+        setError(data.error || "Upload failed"); // Handle errors from API
       }
     } catch (error) {
+      console.error("Error:", error);
       setError("Failed to upload");
     }
   };
-
+  
   return (
     <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
       <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
