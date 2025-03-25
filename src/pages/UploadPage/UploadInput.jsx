@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import FormInput from "./FormInput";
-import UploadIcon from "../../assets/Upload icon.svg"
+import UploadIcon from "../../assets/Upload icon.svg";
 
 function UploadArea({ onUpload, selectedFiles }) {
   return (
@@ -15,67 +15,17 @@ function UploadArea({ onUpload, selectedFiles }) {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full max-w-[445px] h-auto"
         >
-          <rect
-            width="445"
-            height="427"
-            rx="4"
-            fill="#E5E5E9"
-            fillOpacity="0.52"
-          ></rect>
-          <rect
-            x="0.5"
-            y="0.5"
-            width="444"
-            height="426"
-            rx="3.5"
-            stroke="#B9B9B9"
-            strokeOpacity="0.3"
-            strokeDasharray="5 5"
-          ></rect>
-          <img
-            className="absolute w-3 h-[9px] top-1.5 left-[35px]"
-            alt="Vector"
-            src={UploadIcon}
-          />
-          <text
-            fill="#0F0F0F"
-            xmlSpace="preserve"
-            style={{ whiteSpace: "pre" }}
-            fontFamily="Mulish"
-            fontSize="16"
-            fontWeight="bold"
-            letterSpacing="0em"
-          >
-            <tspan x="117.148" y="248.04">
-              Drag &amp; drop files or
-            </tspan>
+          <rect width="445" height="427" rx="4" fill="#E5E5E9" fillOpacity="0.52"></rect>
+          <rect x="0.5" y="0.5" width="444" height="426" rx="3.5" stroke="#B9B9B9" strokeOpacity="0.3" strokeDasharray="5 5"></rect>
+          <img className="absolute w-3 h-[9px] top-1.5 left-[35px]" alt="Vector" src={UploadIcon} />
+          <text fill="#0F0F0F" fontFamily="Mulish" fontSize="16" fontWeight="bold">
+            <tspan x="117.148" y="248.04">Drag &amp; drop files or</tspan>
           </text>
           <a href="#" onClick={onUpload}>
-            <text
-              fill="#0F0F0F"
-              xmlSpace="preserve"
-              style={{ whiteSpace: "pre" }}
-              fontFamily="Mulish"
-              fontSize="16"
-              fontWeight="bold"
-              letterSpacing="0em"
-              textDecoration="underline"
-            >
+            <text fill="#0F0F0F" fontFamily="Mulish" fontSize="16" fontWeight="bold" textDecoration="underline">
               <tspan x="270.586" y="248.04">Browse</tspan>
             </text>
           </a>
-          <text
-            fill="#676767"
-            xmlSpace="preserve"
-            fontFamily="Mulish"
-            fontSize="12"
-            letterSpacing="0em"
-            textAnchor="middle"
-            x="222.5"
-            y="277" 
-          >
-          <tspan>Supported formats: JPEG, PNG, PDF, Word, PPT</tspan>
-          </text>
         </svg>
         {selectedFiles.length > 0 && (
           <ul className="mt-3 text-sm text-stone-700">
@@ -89,16 +39,13 @@ function UploadArea({ onUpload, selectedFiles }) {
   );
 }
 
-function UploadButton({ onClick }) {
+function UploadButton({ onClick, label }) {
   return (
     <button
       onClick={onClick}
-      className="all-[unset] box-border flex w-[445px] h-[45px] items-center justify-center gap-2.5 px-3.5 py-[9px] relative bg-[#0e0e0e] rounded-md"
-      aria-label="Upload files"
+      className="w-full h-10 bg-black text-white font-bold rounded-md mt-3"
     >
-    <div className="relative w-fit [font-family:'Mulish-Bold',Helvetica] font-bold text-white text-sm tracking-[0] leading-[18px] whitespace-nowrap">
-      UPLOAD FILES
-    </div>
+      {label}
     </button>
   );
 }
@@ -107,8 +54,10 @@ function UploadInput() {
   const [documentType, setDocumentType] = React.useState("");
   const [question, setQuestion] = React.useState("");
   const [relation, setRelation] = React.useState("");
-  const [selectedFiles, setSelectedFiles] = React.useState([]); // Added state for selectedFiles
+  const [selectedFiles, setSelectedFiles] = React.useState([]);
   const [error, setError] = React.useState(null);
+  const [documentId, setDocumentId] = React.useState("");
+  const [extractedData, setExtractedData] = React.useState({}); // Store extracted key-value pairs
 
   const handleUpload = () => {
     const input = document.createElement("input");
@@ -118,78 +67,104 @@ function UploadInput() {
 
     input.onchange = (e) => {
       const files = Array.from(e.target.files);
-      console.log("Selected files:", files);
       setSelectedFiles(files);
     };
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(selectedFiles);
+
     if (selectedFiles.length === 0 || !selectedFiles[0]) {
       setError("No file selected");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("document_type", documentType);
     formData.append("questions", question);
     formData.append("relationship", relation);
-    formData.append("file", selectedFiles[0]); // Append the file correctly
-    
-    
+    formData.append("file", selectedFiles[0]);
+
     try {
       const response = await fetch("http://10.0.0.165:5000/ocr/upload", {
         method: "POST",
         credentials: "include",
-        headers: { "Authorization": "Bearer " + localStorage.getItem("token")},
-        body: formData, 
+        headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+        body: formData,
       });
-    
-      const data = await response.json(); // Extract JSON from response
-      
-      console.log(data);
+
+      const data = await response.json();
+
       if (response.ok) {
-        console.log("Success:", data.message); // Display success message
+        setDocumentId(data.document_id); // Store document ID
+        setExtractedData(data.extracted_data || {}); // Store extracted key-value pairs
       } else {
-        setError(data.error || "Upload failed"); // Handle errors from API
+        setError(data.error || "Upload failed");
       }
     } catch (error) {
-      console.error("Error:", error);
       setError("Failed to upload");
     }
   };
-  
+
+  const handleEditChange = (key, value) => {
+    setExtractedData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+  };
+
+  const handleTextEditSubmit = async () => {
+    console.log(extractedData);
+    try {
+      const response = await fetch("http://10.0.0.165:5000/document/store", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ document_id: documentId, final_data: extractedData }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Edited data submitted successfully:", data.message);
+      } else {
+        setError(data.error || "Submission failed");
+      }
+    } catch (error) {
+      setError("Failed to submit edited text");
+    }
+  };
+
   return (
-    <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
-      <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
+    <section className="p-6 bg-white rounded shadow-lg w-[540px] max-w-full">
+      <h2 className="mb-5 text-2xl font-bold text-center">Upload</h2>
       <div className="flex flex-col gap-3 items-center w-full">
-        <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles}/>
-        <br />
-        <FormInput
-          label="Document Type: "
-          type="text"
-          placeholder="e.g. ID, passport, etc."
-          value={documentType}
-          onChange={(e) => setDocumentType(e.target.value)}
-        />
-        <br />
-        <FormInput
-          label="Questions: "
-          type="text"
-          placeholder="Enter your question"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-        <br />
-        <FormInput
-          label="Relation: "
-          type="text"
-          placeholder="Enter relation"
-          value={relation}
-          onChange={(e) => setRelation(e.target.value)}
-        />
-        <br />
-        <UploadButton onClick={handleSubmit} />
+        <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles} />
+        <FormInput label="Document Type:" type="text" placeholder="e.g. ID, passport, etc." value={documentType} onChange={(e) => setDocumentType(e.target.value)} />
+        <FormInput label="Questions:" type="text" placeholder="Enter your question" value={question} onChange={(e) => setQuestion(e.target.value)} />
+        <FormInput label="Relation:" type="text" placeholder="Enter relation" value={relation} onChange={(e) => setRelation(e.target.value)} />
+        <UploadButton onClick={handleSubmit} label="UPLOAD FILES" />
+
+        {Object.keys(extractedData).length > 0 && (
+          <div className="w-full mt-5">
+            <h3 className="text-lg font-bold mb-2">Edit Extracted Data:</h3>
+            {Object.entries(extractedData).map(([key, value]) => (
+              <div key={key} className="mb-2">
+                <label className="block text-sm font-medium text-gray-700">{key}</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                  value={value}
+                  onChange={(e) => handleEditChange(key, e.target.value)}
+                />
+              </div>
+            ))}
+            <UploadButton onClick={handleTextEditSubmit} label="SUBMIT EDITED DATA" />
+          </div>
+        )}
+
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
     </section>
