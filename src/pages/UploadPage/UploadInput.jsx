@@ -1,5 +1,6 @@
 import * as React from "react";
 import FormInput from "./FormInput";
+import Logo from "./Logo";
 import UploadIcon from "../../assets/Upload icon.svg";
 
 function UploadArea({ onUpload, selectedFiles }) {
@@ -219,85 +220,91 @@ function UploadInput() {
   };
 
   return (
-    <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
-      <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
-      <div className="flex flex-col gap-3 items-center w-full">
-        <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles} />
-        <br />
-        <FormInput
-          label="Document Type: "
-          type="text"
-          placeholder="e.g. ID, passport, etc."
-          value={documentType}
-          onChange={(e) => setDocumentType(e.target.value)}
-        />
-        <br />
-        <div>
-          {questions.map((q, index) => (
-            <div key={index} className="mb-2 flex items-center gap-2">
+    <main className="flex overflow-hidden flex-col items-center px-14 py-16 bg-white max-md:px-5">
+    <Logo />
+      <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
+          <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
+          <div className="flex flex-col gap-3 items-center w-full">
+            <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles} />
+            <br />
             <FormInput
-              label={`Question ${index + 1}: `}
+              label="Document Type: "
               type="text"
-              placeholder="Enter your question"
-              value={q}
-              onChange={(e) => handleQuestionChange(index, e.target.value)}
-              className="flex-1" // add this class to make the input take up the remaining space
+              placeholder="e.g. ID, passport, etc."
+              value={documentType}
+              onChange={(e) => setDocumentType(e.target.value)}
             />
-            <button
-              type="button"
-              onClick={() => removeQuestion(index)}
-              className="px-2 py-1 bg-red-500 text-white rounded"
-            >
-              X
-            </button>
-          </div>
-          ))}
-          <button
-            type="button"
-            onClick={addQuestion}
-            className="px-3 py-1 bg-blue-500 text-white rounded"
-          >
-            + Add Question
-          </button>
-        </div>
-        <br />
-        <FormInput
-          label="Relation: "
-          type="text"
-          placeholder="Enter relation"
-          value={relation}
-          onChange={(e) => setRelation(e.target.value)}
-        />
-        <br />
-        <UploadButton onClick={handleSubmit} />
-        <br />
-        {Object.keys(extractedData).length > 0 && (
-          <div className="mt-5">
-            <label className="block text-lg font-semibold">Extracted Data:</label>
-            {Object.keys(extractedData).map((key, index) => (
-              <div key={index} className="mb-3">
-                <label className="block font-semibold">
-                  {`Answer to ${key}`}
-                </label>
-                <input
+            <br />
+            <FormInput
+              label="Relation: "
+              type="text"
+              placeholder="Enter relation"
+              value={relation}
+              onChange={(e) => setRelation(e.target.value)}
+            />
+            <br />
+            <div>
+              {questions.map((q, index) => (
+                <div key={index} className="mb-2 flex items-center gap-2">
+                <FormInput
+                  label={`Question ${index + 1}: `}
                   type="text"
-                  value={editableData[key] || extractedData[key]}
-                  onChange={(e) => handleEditableChange(key, e)}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  placeholder="Enter your question"
+                  value={q}
+                  onChange={(e) => handleQuestionChange(index, e.target.value)}
+                  className="flex-1" // add this class to make the input take up the remaining space
                 />
+                <button
+                  type="button"
+                  onClick={() => removeQuestion(index)}
+                  className="px-2 py-1 bg-red-500 text-white rounded"
+                >
+                  X
+                </button>
               </div>
-            ))}
-            <button
-              onClick={handleSaveEdits}
-              className="px-4 py-2 bg-green-500 text-white rounded"
-            >
-              Save
-            </button>
+              ))}
+              <button
+                type="button"
+                onClick={addQuestion}
+                className="px-3 py-1 bg-blue-500 text-white rounded"
+              >
+                + Add Question
+              </button>
+            </div>
+            <br />
+            
+            <UploadButton onClick={handleSubmit} />
+            <br />
+            {Object.keys(extractedData).length > 0 && (
+              <div className="mt-5">
+                <label className="block text-lg font-semibold">Extracted Data:</label>
+                {Object.keys(extractedData).map((key, index) => (
+                  <div key={index} className="mb-3">
+                    <label className="block font-semibold">
+                      {`Answer to ${key}`}
+                    </label>
+                    <input
+                      type="text"
+                      value={editableData[key] || extractedData[key]}
+                      onChange={(e) => handleEditableChange(key, e)}
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={handleSaveEdits}
+                  className="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                  Save
+                </button>
+              </div>
+            )}
+            {error && <p className="text-red-500 mt-2">{error}</p>}
           </div>
-        )}
-        {error && <p className="text-red-500 mt-2">{error}</p>}
+        </section>
       </div>
-    </section>
+    </main>
   );
 }
 

@@ -1,3 +1,4 @@
+@import "tailwindcss";
 /* Tailwind Components & Utilities */
 @tailwind base;
 @tailwind components;
@@ -19,7 +20,7 @@ html, body {
   margin: 0;
   padding: 0;
   background: transparent;
-  text-align: center;
+  /* text-align: center; */
 }
 
 

@@ -7,9 +7,9 @@ function Logo() {
       <img
         src={Eidetik}
         alt="Eidetik.io logo"
-        className="object-contain shrink-0 rounded-md aspect-square w-[30px]"
+        className="object-contain shrink-0 rounded-md aspect-square w-[40px]"
       />
-      <span className="my-auto">Eidetik.io</span>
+      <span className="my-auto text-xl">Eidetik.io</span>
     </header>
   );
 }

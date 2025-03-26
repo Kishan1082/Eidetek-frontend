@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
   return (
-    <section className="flex flex-col items-center justify-center w-full min-h-screen text-center text-black relative">
-      {/* Background Image */}
-      <img
-        src={Bckgrnd}
-        alt="Background"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <section className="relative flex flex-col items-center justify-center w-full min-h-[70vh] text-center text-black bg-white overflow-hidden">
+      {/* Background Image - Covers 70% of the viewport height */}
+      <div className="absolute inset-0 w-full h-full">
+        <img
+          src={Bckgrnd}
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* Content Container */}
       <div className="relative z-10 max-w-2xl px-6">
@@ -34,7 +36,7 @@ function GetStarted() {
   const handleClick = () => {
     navigate("/signup");
   };
-  
+
   return (
     <button className="px-8 py-4 mt-6 text-base font-medium rounded bg-black text-white transition-all duration-200 ease-in-out hover:bg-gray-900" onClick={handleClick}>
       Get Started
@@ -43,4 +45,3 @@ function GetStarted() {
 }
 
 export default HeroSection;
-

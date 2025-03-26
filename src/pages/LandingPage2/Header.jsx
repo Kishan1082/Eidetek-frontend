@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="flex items-center justify-between px-6 sm:px-10 py-4 w-full bg-gray-100 border-b border-gray-300">
+    <header className="flex flex-row items-center justify-between bg-gray-100 border-b border-gray-300 py-4 px-6 sm:px-10">
       <Logo />
+      <div className="ml-auto flex gap-4">
+      <Logout />
+      </div>
 
     </header>
   );
@@ -21,40 +24,8 @@ function Logo() {
       />
       <span className="font-medium">Eidetik.io</span>
       
-      <div className="ml-auto flex gap-4">
-      <Chatbot />
-      <Upload />
-      <Logout />
-      </div>
+      
     </div>
-  );
-}
-
-function Chatbot() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/chatbot");
-  };
-
-  return (
-    <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
-      Chat with Eidetek
-    </button>
-  );
-}
-
-function Upload() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/upload");
-  };
-
-  return (
-    <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
-      Start a new upload
-    </button>
   );
 }
 function Logout() {
@@ -65,7 +36,7 @@ function Logout() {
   };
 
   return (
-    <button className="text-sm text-black hover:underline ml-auto" onClick={handleClick}>
+    <button className="px-4 py-2 text-sm text-white bg-gray-800 rounded-md hover:bg-gray-700 transition-all" onClick={handleClick}>
       Logout
     </button>
   );

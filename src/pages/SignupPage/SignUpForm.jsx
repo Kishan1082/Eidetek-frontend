@@ -2,14 +2,13 @@
 import React from "react";
 import FormInput from "./FormInput";
 import PasswordInput from "./PasswordInput";
-import SocialButton from "./SocialButton";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function LogInLink() {
   return (
-    <Link to="/login">Log in</Link>
+    <Link to="/login" className="underline hover:text-blue-800 focus:outline-none">Log in</Link>
   );
 }
 
@@ -47,16 +46,18 @@ function SignUpForm() {
             <h1 className="mb-0.5 text-3xl font-medium text-zinc-800">
             Create an account
             </h1>
-            <p className="mb-11 text-base text-neutral-900">
-            Already have an ccount?{" "}
-            <LogInLink />
-            </p>
+            <br />
+            <h2 className="mb-11 text-base text-neutral-900">
+              Already have an account?
+              <LogInLink className="ml-2 " />
+            </h2>
         </header>
 
         <form className="w-full">
             
         <FormInput
           label="What's your email?"
+          placeholder={"Enter your email address"}
           type="email"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
@@ -79,7 +80,7 @@ function SignUpForm() {
 
             <button
             type="submit"
-            className="mb-3 w-full h-16 text-2xl font-medium text-white opacity-25 bg-neutral-900 rounded-[40px]"
+            className="w-full h-12 mt-4 px-8 py-4 text-base font-medium rounded-3xl bg-black text-white transition-all duration-200 ease-in-out hover:bg-gray-900"
             onClick={handleSubmit}
             >
             Create an account

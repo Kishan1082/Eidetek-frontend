@@ -1,13 +1,22 @@
 "use client";
 import React, { useState } from "react";
 
-function PasswordInput({value, onChange}) {
+function PasswordInput({ value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
-  
 
   return (
     <div className="mb-4 w-full">
-        <label className="text-base text-stone-500">Create a password </label>
+      <div className="flex justify-between items-center">
+        <label className="text-base text-stone-500">Create a password</label>
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="text-sm text-stone-500 hover:text-blue-800 focus:outline-none"
+          aria-label={showPassword ? "Hide password" : "Show password"}
+        >
+          {showPassword ? "Hide" : "Show"}
+        </button>
+      </div>
       <input
         type={showPassword ? "text" : "password"}
         placeholder="Enter your password"
@@ -15,9 +24,6 @@ function PasswordInput({value, onChange}) {
         value={value}
         onChange={onChange}
       />
-      <button onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "Hide" : "Show"}
-      </button>
       <p className="text-sm text-stone-500">
         Use 8 or more characters with a mix of letters, numbers & symbols
       </p>
