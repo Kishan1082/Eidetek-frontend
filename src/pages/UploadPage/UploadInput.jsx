@@ -96,7 +96,7 @@ function UploadButton({ onClick }) {
       aria-label="Upload files"
     >
       <div className="relative w-fit [font-family:'Mulish-Bold',Helvetica] font-bold text-white text-sm tracking-[0] leading-[18px] whitespace-nowrap">
-        UPLOAD FILES
+        Submit
       </div>
     </button>
   );
@@ -235,21 +235,22 @@ function UploadInput() {
         <div>
           {questions.map((q, index) => (
             <div key={index} className="mb-2 flex items-center gap-2">
-              <FormInput
-                label={`Question ${index + 1}:`}
-                type="text"
-                placeholder="Enter your question"
-                value={q}
-                onChange={(e) => handleQuestionChange(index, e.target.value)}
-              />
-              <button
-                type="button"
-                onClick={() => removeQuestion(index)}
-                className="px-2 py-1 bg-red-500 text-white rounded"
-              >
-                X
-              </button>
-            </div>
+            <FormInput
+              label={`Question ${index + 1}: `}
+              type="text"
+              placeholder="Enter your question"
+              value={q}
+              onChange={(e) => handleQuestionChange(index, e.target.value)}
+              className="flex-1" // add this class to make the input take up the remaining space
+            />
+            <button
+              type="button"
+              onClick={() => removeQuestion(index)}
+              className="px-2 py-1 bg-red-500 text-white rounded"
+            >
+              X
+            </button>
+          </div>
           ))}
           <button
             type="button"
@@ -267,6 +268,8 @@ function UploadInput() {
           value={relation}
           onChange={(e) => setRelation(e.target.value)}
         />
+        <br />
+        <UploadButton onClick={handleSubmit} />
         <br />
         {Object.keys(extractedData).length > 0 && (
           <div className="mt-5">
@@ -288,12 +291,10 @@ function UploadInput() {
               onClick={handleSaveEdits}
               className="px-4 py-2 bg-green-500 text-white rounded"
             >
-              Save Edits
+              Save
             </button>
           </div>
         )}
-        <br />
-        <UploadButton onClick={handleSubmit} />
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
     </section>

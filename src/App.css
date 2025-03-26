@@ -1,9 +1,14 @@
+/* Tailwind Components & Utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Ensure full viewport usage */
 html, body {
   width: 100%;
   height: 100%;
-  margin: 1%;
-  padding: 1%;
+  margin: 0;
+  padding: 0;
   overflow: auto; /* Allow scrolling */
 }
 
@@ -13,18 +18,11 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: transparent;
   text-align: center;
 }
 
-/* Tailwind Components & Utilities */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-@layer components {
-  /* Custom utility to unset all styles */
-  .custom-all-\[unset\] {
-    all: unset;
-  }
-}
+
+
 

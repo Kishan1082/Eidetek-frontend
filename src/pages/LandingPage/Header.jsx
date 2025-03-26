@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="flex items-center justify-between px-6 sm:px-10 py-4 w-full bg-gray-100 border-b border-gray-300">
+    <header className="flex flex-row items-center justify-start bg-gray-100 border-b border-gray-300 py-4 pl-6 sm:pl-10">
       <Logo />
 
     </header>

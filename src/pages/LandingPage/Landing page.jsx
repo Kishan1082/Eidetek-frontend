@@ -4,7 +4,7 @@ import HeroSection from "./HeroSection";
 
 function LandingPage() {
   return (
-    <main className="flex flex-col min-h-screen w-screen bg-white">
+    <main className="flex flex-col min-h-screen w-full bg-transparent">
       <Header />
       <div className="flex flex-1 items-center justify-center w-full px-4 sm:px-8">
         <HeroSection />
