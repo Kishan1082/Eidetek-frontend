@@ -2,6 +2,23 @@ import * as React from "react";
 import FormInput from "./FormInput";
 import Logo from "./Logo";
 import UploadIcon from "../../assets/Upload icon.svg";
+import { useNavigate } from "react-router-dom";
+
+function BackButton() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/landing-page-2");
+  };
+
+  return (
+    <button
+          className="self-end text-stone-600 hover:underline "
+          onClick={handleClick}
+        >Back
+        </button>
+  );
+}
 
 function UploadArea({ onUpload, selectedFiles }) {
   return (
@@ -195,7 +212,7 @@ function UploadInput() {
     }
 
     try {
-      const response = await fetch("http://10.0.0.165:5000/document/store", {
+      const response = await fetch("http://10.0.0.165:5000/docs/store", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -221,7 +238,10 @@ function UploadInput() {
 
   return (
     <main className="flex overflow-hidden flex-col items-center px-14 py-16 bg-white max-md:px-5">
+    <div className="flex items-center justify-between w-full max-w-[910px]">
     <Logo />
+    <BackButton />
+  </div>
       <div className="flex justify-center items-center min-h-screen bg-gray-50">
         <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
           <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>

@@ -1,18 +1,37 @@
-"use client";
-import React from "react";
+import React, { useState } from "react";
 import ChatbotSuggestion from "./ChatbotSuggestion";
 import ChatbotInput from "./ChatbotInput";
-import Eidetik from "../../assets/Logo.svg"
+import Eidetik from "../../assets/Logo.svg";
+import suggestions from "./suggestions.json";
+import { useNavigate } from "react-router-dom";
 
-function ChatbotUI() {
-  const suggestions = [
-    "Give me my Insurance number",
-    "Show me my prescription details.",
-    "What's the venue for my concert?",
-  ];
+function BackButton() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/landing-page-2");
+  };
 
   return (
-    <section className="flex overflow-hidden flex-col items-center px-20 pt-44 pb-10 text-sm bg-white max-md:px-5 max-md:pt-24">
+    <button
+          className="self-start text-stone-600 hover:underline "
+          onClick={handleClick}
+        >Back
+        </button>
+  );
+}
+
+function ChatbotUI() {
+  const [inputValue, setInputValue] = useState("");
+  const randomSuggestions = suggestions.sort(() => Math.random() - 0.5).slice(0, 3);
+
+  const handleSuggestionClick = (suggestion) => {
+    setInputValue(suggestion);
+  };
+
+  return (
+    <section className="flex overflow-hidden flex-col items-center px-10 pt-22 pb-5 text-sm bg-white max-md:px-5 max-md:pt-24">
+      <BackButton/>
       <div className="flex flex-col ml-9 w-full max-w-[910px] max-md:max-w-full">
         <header className="flex flex-col self-center max-w-full text-xl text-center text-stone-950 w-[425px]">
           <img
@@ -30,13 +49,17 @@ function ChatbotUI() {
             <h2 className="font-bold text-zinc-600 max-md:mr-2">
               Suggestions on what to ask Eidetik
             </h2>
-            <ChatbotSuggestion text={suggestions[0]} />
+            {randomSuggestions.map((suggestion, index) => (
+              <ChatbotSuggestion
+                key={index}
+                text={suggestion}
+                onClick={() => handleSuggestionClick(suggestion)}
+              />
+            ))}
           </div>
-          <ChatbotSuggestion text={suggestions[1]} />
-          <ChatbotSuggestion text={suggestions[2]} />
         </div>
 
-        <ChatbotInput />
+        <ChatbotInput inputValue={inputValue} setInputValue={setInputValue} />
       </div>
     </section>
   );
