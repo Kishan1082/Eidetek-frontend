@@ -24,76 +24,78 @@ function UploadArea({ onUpload, selectedFiles }) {
   return (
     <div className="relative w-full">
       <div className="flex flex-col items-center">
-        <svg
-          width="445"
-          height="427"
-          viewBox="0 0 445 427"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full max-w-[445px] h-auto"
-        >
-          <rect
-            width="445"
-            height="427"
-            rx="4"
-            fill="#E5E5E9"
-            fillOpacity="0.52"
-          ></rect>
-          <rect
-            x="0.5"
-            y="0.5"
-            width="444"
-            height="426"
-            rx="3.5"
-            stroke="#B9B9B9"
-            strokeOpacity="0.3"
-            strokeDasharray="5 5"
-          ></rect>
-          <img
-            className="absolute w-3 h-[9px] top-1.5 left-[35px]"
-            alt="Vector"
-            src={UploadIcon}
-          />
-          <text
-            fill="#0F0F0F"
-            xmlSpace="preserve"
-            style={{ whiteSpace: "pre" }}
-            fontFamily="Mulish"
-            fontSize="16"
-            fontWeight="bold"
-            letterSpacing="0em"
-          >
-            <tspan x="117.148" y="248.04">
-              Drag &amp; drop files or
-            </tspan>
-          </text>
-          <a href="#" onClick={onUpload}>
-            <text
-              fill="#0F0F0F"
-              xmlSpace="preserve"
-              style={{ whiteSpace: "pre" }}
-              fontFamily="Mulish"
-              fontSize="16"
-              fontWeight="bold"
-              letterSpacing="0em"
-              textDecoration="underline"
-            >
-              <tspan x="270.586" y="248.04">Browse</tspan>
-            </text>
-          </a>
-          <text
-            fill="#676767"
-            xmlSpace="preserve"
-            fontFamily="Mulish"
-            fontSize="12"
-            letterSpacing="0em"
-            textAnchor="middle"
-            x="222.5"
-            y="277" 
-          >
-            <tspan>Supported formats: JPEG, PNG, PDF, Word, PPT</tspan>
-          </text>
-        </svg>
+      <div className="relative">
+  <svg
+    width="445"
+    height="427"
+    viewBox="0 0 445 427"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-full max-w-[445px] h-auto"
+  >
+    <rect
+      width="445"
+      height="427"
+      rx="4"
+      fill="#E5E5E9"
+      fillOpacity="0.52"
+    ></rect>
+    <rect
+      x="0.5"
+      y="0.5"
+      width="444"
+      height="426"
+      rx="3.5"
+      stroke="#B9B9B9"
+      strokeOpacity="0.3"
+      strokeDasharray="5 5"
+    ></rect>
+    <text
+      fill="#0F0F0F"
+      xmlSpace="preserve"
+      style={{ whiteSpace: "pre" }}
+      fontFamily="Mulish"
+      fontSize="16"
+      fontWeight="bold"
+      letterSpacing="0em"
+    >
+      <tspan x="117.148" y="248.04">
+        Drag &amp; drop files or
+      </tspan>
+    </text>
+    <a href="#" onClick={onUpload}>
+      <text
+        fill="#0F0F0F"
+        xmlSpace="preserve"
+        style={{ whiteSpace: "pre" }}
+        fontFamily="Mulish"
+        fontSize="16"
+        fontWeight="bold"
+        letterSpacing="0em"
+        textDecoration="underline"
+      >
+        <tspan x="270.586" y="248.04">Browse</tspan>
+      </text>
+    </a>
+    <text
+      fill="#676767"
+      xmlSpace="preserve"
+      fontFamily="Mulish"
+      fontSize="12"
+      letterSpacing="0em"
+      textAnchor="middle"
+      x="222.5"
+      y="277" 
+    >
+      <tspan>Supported formats: JPEG, PNG, PDF, Word, PPT</tspan>
+    </text>
+  </svg>
+  <img
+    className="absolute top-10 left-30 w-45 h-50"
+    alt="Vector"
+    src={UploadIcon}
+  />
+</div>
         {selectedFiles.length > 0 && (
           <ul className="mt-3 text-sm text-stone-700">
             {selectedFiles.map((file, index) => (
