@@ -265,11 +265,22 @@ function UploadInput() {
             <br />
             <FormInput
               label="Relation: "
-              type="text"
-              placeholder="Enter relation"
+              type="select"
               value={relation}
               onChange={(e) => setRelation(e.target.value)}
-            />
+            >
+              <option value="">Select relation</option>
+              <option value="Self">Self</option>
+              <option value="Father">Father</option>
+              <option value="Mother">Mother</option>
+              <option value="Brother">Brother</option>
+              <option value="Sister">Sister</option>
+              <option value="Spouse">Wife</option>
+              <option value="Husband">Husband</option>
+              <option value="Son">Son</option>
+              <option value="Daughter">Daughter</option>
+              <option value="Other">Other</option>
+            </FormInput>
             <br />
             <div>
               {questions.map((q, index) => (
