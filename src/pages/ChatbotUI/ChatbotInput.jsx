@@ -1,13 +1,12 @@
 import React from "react";
 import send from "../../assets/send.svg";
 
-function ChatbotInput({ inputValue, setInputValue }) {
+function ChatbotInput({ inputValue, setInputValue, onSendMessage }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      // Handle submission logic here
-      console.log("Submitted:", inputValue);
-      setInputValue("");
+      onSendMessage(inputValue); // Send input to chatbot
+      setInputValue(""); // Clear input after sending
     }
   };
 

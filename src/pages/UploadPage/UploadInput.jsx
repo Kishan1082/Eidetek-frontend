@@ -130,7 +130,9 @@ function UploadInput() {
   const [error, setError] = React.useState(null);
   const [documentId, setDocumentId] = React.useState(null);
   const [extractedData, setExtractedData] = React.useState({}); 
-  const [editableData, setEditableData] = React.useState({}); 
+  const [editableData, setEditableData] = React.useState({});
+  const [relationship, setRelationship] = React.useState("");
+  const [document_type, setDocument_type] = React.useState("");
 
   const handleUpload = () => {
     const input = document.createElement("input");
@@ -190,6 +192,8 @@ function UploadInput() {
         setDocumentId(data.document_id);
         setExtractedData(data.extracted_data);
         setEditableData(data.extracted_data);
+        setRelationship(data.relationship);
+        setDocument_type(data.document_type);
       } else {
         setError(data.error || "Upload failed");
       }
@@ -224,6 +228,7 @@ function UploadInput() {
         body: JSON.stringify({
           document_id: documentId,
           final_data: editableData,
+          relationship: relationship
         }),
       });
 
