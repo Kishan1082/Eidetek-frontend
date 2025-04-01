@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "./Logo";
 import InputField from "./InputField";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 function SignupButton() {
   const navigate = useNavigate();
@@ -21,27 +22,14 @@ function SignupButton() {
 function LoginPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const navigate = useNavigate();
+  // const [error, setError] = React.useState(null);
+  // const navigate = useNavigate();
+  const { login, error } = useAuth(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch("http://10.0.0.165:5000/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        alert("Login successful!");
-        navigate("/landing-page-2");
-      } 
-    } catch (error) {
-      setError("Failed to login");
-    }
+    login(username, password);
+    
   };
 
   return (

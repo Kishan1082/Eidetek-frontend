@@ -70,11 +70,11 @@ function ChatbotUI() {
         </header>
 
         {/* Chat Messages */}
-        <div className="flex flex-col gap-2 mt-4 w-full max-h-96 overflow-y-auto border p-4 rounded-md shadow-md">
-          {messages.map((msg, index) => (
+        <div className="flex flex-col-reverse gap-2 mt-4 w-full h-96 overflow-y-auto p-4 rounded-md ">
+          {messages.slice().reverse().map((msg, index) => (
             <div
               key={index}
-              className={`p-2 rounded-md w-fit ${
+              className={`p-3 rounded-lg max-w-[75%] break-words ${
                 msg.sender === "user"
                   ? "bg-blue-500 text-white self-end"
                   : "bg-gray-200 text-black self-start"
@@ -84,6 +84,7 @@ function ChatbotUI() {
             </div>
           ))}
         </div>
+
 
         {/* Suggestions */}
         <div className="flex flex-wrap gap-3.5 items-end mt-5 w-full max-md:max-w-full">

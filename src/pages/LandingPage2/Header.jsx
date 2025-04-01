@@ -1,6 +1,7 @@
 import React from "react";
 import Eidetik from "../../assets/Logo.svg";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 function Header() {
   return (
@@ -29,10 +30,10 @@ function Logo() {
   );
 }
 function Logout() {
-  const navigate = useNavigate();
+  const { logout } = useAuth();  // Get the logout function from AuthContext
 
   const handleClick = () => {
-    navigate("/");
+      logout();  // Call logout function from context to clear token and set isAuthenticated to false
   };
 
   return (

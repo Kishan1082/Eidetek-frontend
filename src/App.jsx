@@ -7,21 +7,26 @@ import SignUpForm from "./pages/SignupPage/SignupForm";
 import ChatbotUI from "./pages/ChatbotUI/ChatbotUI";
 import UploadInput from "./pages/UploadPage/UploadInput";
 import "./App.css";
+import { AuthProvider } from "./AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function App() {
   return (
     <Router>
+      <AuthProvider>
       <div>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/landing-page-2" element={<LandingPage2 />} />
+          <Route path="/landing-page-2" element={<ProtectedRoute element={<LandingPage2 />} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/chatbot" element={<ChatbotUI />} />
-          <Route path="/upload" element={<UploadInput />} />
+          <Route path="/chatbot" element={<ProtectedRoute element={<ChatbotUI />} />} />
+          <Route path="/upload" element={<ProtectedRoute element={<UploadInput />} />} />
         </Routes>
-      </div>
+        </div>
+      </AuthProvider>
+      
     </Router>
   );
 }
