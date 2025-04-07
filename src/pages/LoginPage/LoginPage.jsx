@@ -13,7 +13,7 @@ function SignupButton() {
   };
 
   return (
-    <button className="w-[25%] h-12 mt-4 px-8 py-4 text-base font-medium rounded-3xl bg-black text-white transition-all duration-200 ease-in-out hover:bg-gray-900" onClick={handleClick} type="button">
+    <button className="w-half h-12 mt-4 px-8 py-4 text-base font-medium rounded-3xl bg-black text-white transition-all duration-200 ease-in-out hover:bg-gray-900" onClick={handleClick} type="button">
       Sign up
     </button>
   );

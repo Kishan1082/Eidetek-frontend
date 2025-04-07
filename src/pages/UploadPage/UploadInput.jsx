@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import FormInput from "./FormInput";
 import Logo from "./Logo";
 import UploadIcon from "../../assets/Upload icon.svg";
@@ -91,7 +91,7 @@ function UploadArea({ onUpload, selectedFiles }) {
     </text>
   </svg>
   <img
-    className="absolute top-10 left-30 w-45 h-50"
+    className="absolute top-10 left-30 w-45 h-40"
     alt="Vector"
     src={UploadIcon}
   />
@@ -108,19 +108,49 @@ function UploadArea({ onUpload, selectedFiles }) {
   );
 }
 
-function UploadButton({ onClick }) {
+function UploadButton({ onClick, loading }) {
   return (
     <button
       onClick={onClick}
-      className="all-[unset] box-border flex w-[445px] h-[45px] items-center justify-center gap-2.5 px-3.5 py-[9px] relative bg-[#0e0e0e] rounded-md"
+      disabled={loading}
+      className={`all-[unset] box-border flex w-[445px] h-[45px] items-center justify-center gap-2.5 px-3.5 py-[9px] relative rounded-md transition-opacity duration-200 ${
+        loading ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#0e0e0e]'
+      }`}
       aria-label="Upload files"
     >
-      <div className="relative w-fit [font-family:'Mulish-Bold',Helvetica] font-bold text-white text-sm tracking-[0] leading-[18px] whitespace-nowrap">
-        Submit
-      </div>
+      {loading ? (
+        <div className="flex items-center gap-2">
+          <svg
+            className="animate-spin h-4 w-4 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 100 16v-4l-3.5 3.5L12 24v-4a8 8 0 01-8-8z"
+            ></path>
+          </svg>
+          <span className="text-white text-sm font-bold">Uploading...</span>
+        </div>
+      ) : (
+        <div className="relative w-fit [font-family:'Mulish-Bold',Helvetica] font-bold text-white text-sm tracking-[0] leading-[18px] whitespace-nowrap">
+          Submit
+        </div>
+      )}
     </button>
   );
 }
+
 
 function UploadInput() {
   const [documentType, setDocumentType] = React.useState("");
@@ -133,6 +163,8 @@ function UploadInput() {
   const [editableData, setEditableData] = React.useState({});
   const [relationship, setRelationship] = React.useState("");
   const [document_type, setDocument_type] = React.useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleUpload = () => {
@@ -182,7 +214,8 @@ function UploadInput() {
     formData.append("relationship", relation);
     formData.append("file", selectedFiles[0]);
 
-   
+    setLoading(true); 
+
     try {
       const response = await fetch("http://10.0.0.165:5000/ocr/upload", {
         method: "POST",
@@ -205,6 +238,8 @@ function UploadInput() {
     } catch (error) {
       console.error("Error:", error);
       setError("Failed to upload");
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -277,7 +312,7 @@ function UploadInput() {
               onChange={(e) => setRelation(e.target.value)}
             >
               <option value="">Select relation</option>
-              <option value="myself">myself</option>
+              <option value="myself">Myself</option>
               <option value="Father">Father</option>
               <option value="Mother">Mother</option>
               <option value="Brother">Brother</option>
@@ -286,7 +321,7 @@ function UploadInput() {
               <option value="Husband">Husband</option>
               <option value="Son">Son</option>
               <option value="Daughter">Daughter</option>
-              <option value="Other">Other</option>
+              <option value="Friend">Friend</option>
             </FormInput>
             <br />
             <div>
@@ -319,7 +354,7 @@ function UploadInput() {
             </div>
             <br />
             
-            <UploadButton onClick={handleSubmit} />
+            <UploadButton onClick={handleSubmit}  loading={loading}/>
             <br />
             {Object.keys(extractedData).length > 0 && (
               <div className="mt-5">
