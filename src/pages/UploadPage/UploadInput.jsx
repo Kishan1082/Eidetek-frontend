@@ -133,6 +133,7 @@ function UploadInput() {
   const [editableData, setEditableData] = React.useState({});
   const [relationship, setRelationship] = React.useState("");
   const [document_type, setDocument_type] = React.useState("");
+  const navigate = useNavigate();
 
   const handleUpload = () => {
     const input = document.createElement("input");
@@ -174,10 +175,14 @@ function UploadInput() {
 
     const formData = new FormData();
     formData.append("document_type", documentType);
-    formData.append("questions", JSON.stringify(questions));
+    // formData.append("questions", JSON.stringify(questions));
+    questions.forEach((question) => {
+      formData.append('questions', question);
+    });
     formData.append("relationship", relation);
     formData.append("file", selectedFiles[0]);
 
+   
     try {
       const response = await fetch("http://10.0.0.165:5000/ocr/upload", {
         method: "POST",
@@ -235,6 +240,8 @@ function UploadInput() {
       const data = await response.json();
       if (response.ok) {
         console.log("Edited data submitted successfully:", data.message);
+        alert("Upload successful!");
+        navigate("/chatbot");
       } else {
         setError(data.error || "Submission failed");
       }
@@ -270,7 +277,7 @@ function UploadInput() {
               onChange={(e) => setRelation(e.target.value)}
             >
               <option value="">Select relation</option>
-              <option value="Self">Self</option>
+              <option value="myself">myself</option>
               <option value="Father">Father</option>
               <option value="Mother">Mother</option>
               <option value="Brother">Brother</option>

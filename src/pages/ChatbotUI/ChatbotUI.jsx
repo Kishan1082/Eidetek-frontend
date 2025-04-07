@@ -38,8 +38,9 @@ function ChatbotUI() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("token")
         },
-        body: JSON.stringify({ message,user: "husband" }),
+        body: JSON.stringify({ message }),
       });
 
       const data = await response.json();
