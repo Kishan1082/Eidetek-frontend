@@ -3,6 +3,7 @@ import FormInput from "./FormInput";
 import Logo from "./Logo";
 import UploadIcon from "../../assets/Upload icon.svg";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function BackButton() {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ function UploadArea({ onUpload, selectedFiles }) {
       x="222.5"
       y="277" 
     >
-      <tspan>Supported formats: JPEG, PNG, PDF, Word, PPT</tspan>
+      <tspan>Supported formats: .jpeg, .jpg, .png, .svg</tspan>
     </text>
   </svg>
   <img
@@ -294,6 +295,17 @@ function UploadInput() {
       <div className="flex justify-center items-center min-h-screen bg-gray-50">
         <section className="relative p-10 bg-white rounded shadow-[0_6px_8px_rgba(0,0,0,0.05)] w-[540px] z-[1] max-md:p-8 max-md:max-w-[540px] max-md:w-[90%] max-sm:p-5">
           <h2 className="mb-5 text-2xl font-bold text-center text-stone-950 max-sm:text-xl">Upload</h2>
+        <div className="flex items-center gap-2 w-full">
+          <span>Having a PDF? Convert it into image</span>
+          <a
+            href="https://www.ilovepdf.com/pdf_to_jpg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            here
+          </a>
+        </div>
           <div className="flex flex-col gap-3 items-center w-full">
             <UploadArea onUpload={handleUpload} selectedFiles={selectedFiles} />
             <br />
