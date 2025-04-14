@@ -56,7 +56,7 @@ function ChatbotUI() {
   };
 
   return (
-    <section className="flex overflow-hidden flex-col items-center px-10 pt-22 pb-5 text-sm bg-white max-md:px-5 max-md:pt-24">
+    <section className="flex overflow-hidden flex-col items-center px-10 py-10 text-sm bg-white max-md:px-5 max-md:pt-24">
       <BackButton />
       <div className="flex flex-col ml-9 w-full max-w-[910px] max-md:max-w-full">
         <header className="flex flex-col self-center max-w-full text-xl text-center text-stone-950 w-[425px]">

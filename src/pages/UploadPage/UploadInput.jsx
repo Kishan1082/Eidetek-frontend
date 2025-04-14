@@ -287,7 +287,7 @@ function UploadInput() {
   };
 
   return (
-    <main className="flex overflow-hidden flex-col items-center px-14 py-16 bg-white max-md:px-5">
+    <main className="flex overflow-hidden flex-col items-center px-8 py-8 bg-white max-md:px-5">
     <div className="flex items-center justify-between w-full max-w-[910px]">
     <Logo />
     <BackButton />
