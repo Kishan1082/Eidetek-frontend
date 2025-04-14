@@ -10,24 +10,28 @@ export const AuthProvider = ({ children }) => {
 
     // Check authentication status on initial load
     useEffect(() => {
-        fetch("http://10.0.0.165:5000/auth/protected", { 
-            credentials: "include", 
-            method: "GET", 
-            headers: { 
-                "Content-Type": "application/json", 
-                "Authorization": "Bearer " + localStorage.getItem("token") 
-            } 
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setIsAuthenticated(false);
+            return;
+        }
+
+        fetch("http://10.0.0.165:5000/auth/protected", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+            },
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 200) {
-                    setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
-                }
+            .then((res) => {
+            if (res.status === 200) {
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
+            }
             })
             .catch(() => setIsAuthenticated(false));
-    }, []);
+        }, []);
 
     // Login function to handle user authentication
     const login = async (username, password) => {
